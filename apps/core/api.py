@@ -16,16 +16,18 @@ def barista(request):
 
     """
     try:
-        params = {k: request.GET[k]
-                  for k in (
-                      'coffe', 'size', 'milk', 'location')
-                  }
+        params = {
+            k: request.GET[k]
+            for k in (
+                'coffe', 'size', 'milk', 'location'
+            )
+        }
 
     except MultiValueDictKeyError as e:
         key = str(e).strip("'")
         body = f'Missing Param: {key}'
         headers = {'Content-Type': 'text/plain; charset=utf-8'}
-        return HttpResponse(body, status=400,  headers=headers)
+        return HttpResponse(body, status=400, headers=headers)
 
     order = Order(**params)
     coffeshop.place_order(order)
