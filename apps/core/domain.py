@@ -1,4 +1,3 @@
-from coopy.base import init_persistent_system
 
 
 class Order:
