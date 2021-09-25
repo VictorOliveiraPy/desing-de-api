@@ -10,12 +10,12 @@ def test_get_not_allowed(client, coffeeshop):
 
 
 def test_post_sucess(client, coffeeshop):
-    url = '/order/create?coffe=latte&size=large&milk=whole&location=takeAway'
+    url = '/order/create?coffee=latte&size=large&milk=whole&location=takeAway'
     response = client.post(url)
 
     assert response.status_code == HTTPStatus.CREATED
     assert len(coffeeshop.orders) == 1
-    assert b'Order=1' == response.content
+    assert response.content == b'coffee=latte\nid=1\nlocation=takeAway\nmilk=whole\nsize=large'
 
 
 def test_post_badreq(client, coffeeshop):
