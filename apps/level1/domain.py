@@ -1,5 +1,3 @@
-
-
 class DoesNotExist(Exception):
     pass
 
@@ -11,6 +9,9 @@ class Order:
         self.size = size
         self.milk = milk
         self.location = location
+
+    def __str__(self):
+        return '\n'.join((f'{k}={v}' for k, v in sorted(vars(self).items())))
 
 
 class CoffeeShop:
@@ -29,3 +30,17 @@ class CoffeeShop:
             return self.orders.pop(order.id)
         except KeyError as e:
             raise DoesNotExist(order.id)
+
+    def update(self, order):
+        if order.id not in self.orders:
+            raise DoesNotExist(order.id)
+
+        self.orders[order.id] = order
+        return order
+
+    def read(self, id):
+        id = int(id)
+        try:
+            return self.orders[id]
+        except KeyError as e:
+            raise DoesNotExist(id)

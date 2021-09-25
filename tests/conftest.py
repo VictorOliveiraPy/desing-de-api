@@ -1,5 +1,6 @@
-from apps.level1.domain import CoffeeShop, Order
 import pytest
+
+from apps.level1.domain import CoffeeShop, Order
 
 
 @pytest.fixture

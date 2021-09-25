@@ -2,7 +2,7 @@ from coopy.base import init_persistent_system
 from django.http import HttpResponse
 from django.utils.datastructures import MultiValueDictKeyError
 
-from apps.core.domain import Order, CoffeShop
+from apps.core.domain import CoffeShop, Order
 
 coffeshop = init_persistent_system(CoffeShop())
 
