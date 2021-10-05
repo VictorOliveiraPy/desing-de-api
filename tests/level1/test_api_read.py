@@ -1,7 +1,5 @@
 from http import HTTPStatus
 
-import pytest
-
 
 def test_read_success(client, onecoffee):
     url = '/order?id=1'
@@ -18,7 +16,6 @@ def rest_read_not_allowed(client, onecoffe):
     assert response.status_code == HTTPStatus.METHOD_NOT_ALLOWED
 
 
-@pytest.mark.skip
 def test_read_badreq(client, onecoffee):
     url = '/order'
     response = client.get(url)

@@ -1,7 +1,5 @@
 from http import HTTPStatus
 
-import pytest
-
 
 def test_delete_success(client, onecoffee):
     url = '/order/delete?id=1'
@@ -11,7 +9,6 @@ def test_delete_success(client, onecoffee):
     assert len(onecoffee.orders) == 0
 
 
-@pytest.mark.skip
 def test_delete_badreq(client, onecoffee):
     url = '/order/delete'
     response = client.post(url)

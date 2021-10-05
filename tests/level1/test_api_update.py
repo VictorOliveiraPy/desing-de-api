@@ -1,7 +1,5 @@
 from http import HTTPStatus
 
-import pytest
-
 
 def test_update_sucess(client, onecoffee):
     url = '/order/update?id=1&coffee=curto&milk=&size=small&location=takeAway'
@@ -20,7 +18,6 @@ def test_update_not_allowed(client, onecoffee):
     assert response.status_code == HTTPStatus.METHOD_NOT_ALLOWED
 
 
-@pytest.mark.skip
 def test_update_badreq(client):
     url = '/order/update'
     response = client.post(url)
