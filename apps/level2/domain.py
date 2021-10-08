@@ -1,8 +1,9 @@
-from enum import auto, Enum
+from enum import Enum, auto
+
+from django.utils.datetime_safe import datetime
 
 
 def now():
-    from django.utils.datetime_safe import datetime
     return datetime.now()
 
 

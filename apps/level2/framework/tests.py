@@ -1,8 +1,10 @@
 import functools
-from django.test import Client
 from functools import partialmethod
+
+from django.test import Client
+
 from apps.level2.framework.http import DEFAULT_CT
-from apps.level2.framework.serializers import MyJSONEncoder, MyJSONDecoder
+from apps.level2.framework.serializers import MyJSONDecoder, MyJSONEncoder
 
 APIClient = type(
     'APIClient',

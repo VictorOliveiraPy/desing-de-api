@@ -3,7 +3,7 @@ import json
 
 from django.utils.datastructures import MultiValueDictKeyError
 
-from apps.level2.framework.http import MethodNotAllowed, BadRequest
+from apps.level2.framework.http import BadRequest, MethodNotAllowed
 
 
 class allow:

@@ -1,7 +1,8 @@
 from coopy.base import init_persistent_system
 
 from apps.level2.domain import CoffeeShop, Order, Status
-from apps.level2.framework import allow, datarequired, Created, serialize, abs_reverse, NoContent, Ok
+from apps.level2.framework import (Created, NoContent, Ok, abs_reverse, allow,
+                                   datarequired, serialize)
 
 coffeeshop = init_persistent_system(CoffeeShop(), basedir='level2')
 
