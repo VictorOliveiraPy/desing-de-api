@@ -7,7 +7,8 @@ from client.core import place_order
 def test_place_order():
     httpretty.register_uri(
         httpretty.GET,
-        'http://localhost:8000/PlaceOrder',
-        'Order=1'
+        'http://localhost:8000/PlaceOrder?coffee=latte&size=large&milk=whole&location=takeAway',
+        'Order=1',
+        match_querystring=True
     )
-    assert place_order('latte', 'whole', 'large', 'takeAway') == '1'
+    assert place_order(coffee='latte', size='large', milk='whole', location='takeAway') == '1'
