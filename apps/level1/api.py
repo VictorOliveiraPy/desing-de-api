@@ -11,7 +11,7 @@ coffeeshop = init_persistent_system(CoffeeShop(), basedir='level1')
 @require('coffe', 'size', 'milk', 'location')
 def create(request, params):
     order = Order(**params)
-    coffeeshop.place_order(order)
+    coffeeshop.create(order)
 
     body = f'Order={order.id}'
 

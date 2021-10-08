@@ -1,27 +1,45 @@
-class DoesNotExist(Exception):
-    pass
+from enum import auto, Enum
+
+
+def now():
+    from django.utils.datetime_safe import datetime
+    return datetime.now()
+
+
+class Status(Enum):
+    Placed = auto()
+    Paid = auto()
+    Served = auto()
+    Collected = auto()
 
 
 class Order:
-    def __init__(self, coffe='', size='', milk='', location='', id=None):
+    def __init__(self, coffee='', size='', milk='', location='', id=None, crated_at=None, status=None):
         self.id = None if id is None else int(id)
-        self.coffe = coffe
+        self.coffee = coffee
         self.size = size
         self.milk = milk
         self.location = location
+        self.created_at = now() if crated_at is None else crated_at
+        self.status = status
 
-    def __str__(self):
-        return '\n'.join((f'{k}={v}' for k, v in sorted(vars(self).items())))
+    def vars(self):
+        d = vars(self)
+        d['status'] = str(d['status']).removeprefix('Status.')
+        return d
+
+
+class DoesNotExist(Exception):
+    pass
 
 
 class CoffeeShop:
     def __init__(self):
         self.orders = {}
 
-    def place_order(self, order):
+    def create(self, order):
         if order.id is None:
             order.id = len(self.orders) + 1
-
         self.orders[order.id] = order
         return order
 
@@ -32,8 +50,10 @@ class CoffeeShop:
             raise DoesNotExist(order.id)
 
     def update(self, order):
-        if order.id not in self.orders:
-            raise DoesNotExist(order.id)
+        saved = self.read(order.id)
+
+        if order.status is None:
+            order.status = saved.status
 
         self.orders[order.id] = order
         return order

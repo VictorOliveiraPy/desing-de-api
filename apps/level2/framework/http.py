@@ -1,11 +1,7 @@
-import functools
-import json
 from http import HTTPStatus
-
 from django.http import HttpResponse
-from django.utils.datastructures import MultiValueDictKeyError
 
-DEFAULT_CT = 'text/plain; charset=utf-8'
+DEFAULT_CT = 'application/json'
 
 
 class MyResponse(HttpResponse):
@@ -45,36 +41,3 @@ class NoContent(MyResponse):
 
 class Ok(MyResponse):
     pass
-
-
-class allow:
-    def __init__(self, methods):
-        self.allowed = tuple(m.upper() for m in methods)
-
-    def __call__(self, view):
-        @functools.wraps(view)
-        def wrapper(request):
-            if request.method not in self.allowed:
-                return MethodNotAllowed()
-
-            return view(request)
-
-        return wrapper
-
-
-class require:
-    def __init__(self, *params):
-        self.params = params
-
-    def __call__(self, view):
-        @functools.wraps(view)
-        def wrapper(request):
-            try:
-                params = {k: request.GET[k] for k in self.params}
-            except MultiValueDictKeyError as e:
-                return BadRequest(str(e).strip("'"))
-
-            return view(request, params)
-
-        return wrapper
-

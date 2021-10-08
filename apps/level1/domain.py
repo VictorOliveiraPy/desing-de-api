@@ -18,7 +18,7 @@ class CoffeeShop:
     def __init__(self):
         self.orders = {}
 
-    def place_order(self, order):
+    def create(self, order):
         if order.id is None:
             order.id = len(self.orders) + 1
 

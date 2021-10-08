@@ -30,7 +30,7 @@ def barista(request):
         return HttpResponse(body, status=400, headers=headers)
 
     order = Order(**params)
-    coffeshop.place_order(order)
+    coffeshop.create(order)
 
     body = f'{order.id}'
     headers = {'Content-Type': 'text/plain; charset=utf-8'}

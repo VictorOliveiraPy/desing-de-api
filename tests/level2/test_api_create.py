@@ -1,8 +1,10 @@
+from datetime import datetime
 from http import HTTPStatus
 
 import pytest
 
 
+@pytest.mark.skip
 def test_get_not_allowed(client, coffeeshop):
     url = '/order/create'
     data = dict(coffe='latte', size='large', milk='whole', location='takeAway')
@@ -12,20 +14,23 @@ def test_get_not_allowed(client, coffeeshop):
     assert len(coffeeshop.orders) == 0
 
 
-def test_post_sucess(client, coffeeshop):
-    url = '/order/create'
-    data = dict(coffe='latte', size='large', milk='whole', location='takeAway')
-
-    response = client.post(url, data=data, content_type='application/json')
-
+def test_post_sucess(apiclient, coffeeshop):
+    url = '/order'
+    data = dict(coffee='latte', size='large', milk='whole', location='takeAway')
+    response = apiclient.post(url, data=data)
     assert response.status_code == HTTPStatus.CREATED
+
+    assert response.headers['Location'] == 'http://testserver/order/1'
     assert len(coffeeshop.orders) == 1
-    assert response.content == b'coffee=latte\nid=1\nlocation=takeAway\nmilk=whole\nsize=large'
+
+    expected = dict(id=1, coffee='latte', size='large', milk='whole', location='takeAway',
+                    created_at=datetime(2021, 4, 28), status='Placed')
+    assert response.json() == expected
 
 
 @pytest.mark.skip
 def test_post_badreq(client, coffeeshop):
-    url = '/order/create'
+    url = '/order'
     data = dict(coffe='latte', size='large', milk='whole')
 
     response = client.post(url, data=data, content_type='application/json')

@@ -1,4 +1,5 @@
 import argparse
+import json
 import re
 
 import requests
@@ -6,12 +7,31 @@ import requests
 BASE_URL = 'http://localhost:8000'
 
 
-def place_order(coffee, size, milk, location):
-    url = f'{BASE_URL}/order/create?coffe{coffee}?size={size}?milk{milk}&location={location}'
+# def place_order(coffee, size, milk, location):
+#     url = f'{BASE_URL}/order/create?coffe{coffee}?size={size}?milk{milk}&location={location}'
+#
+#     r = requests.get(url)
+#
+#     return ''.join(re.findall(r'Order=(\d+)', r.text))
 
-    r = requests.get(url)
 
-    return ''.join(re.findall(r'Order=(\d+)', r.text))
+def post(coffee, size, milk, location):
+    url = f'{BASE_URL}/order'
+    data = dict(coffee=coffee, size=size, milk=milk, location=location)
+    headers = {'content-type': 'application/json'}
+
+    response = requests.post(url, data=json.dumps(data), headers=headers)
+
+    return response.json()
+
+
+def get(id):
+    url = f'{BASE_URL}/order/{id}'
+    headers = {'content-type': 'application/json'}
+
+    response = requests.get(url, headers=headers)
+    d = response.json()
+    return d
 
 
 def build_parser():
@@ -32,4 +52,8 @@ if __name__ == '__main__':
     parser = build_parser()
     args = parser.parse_args()
 
-    print(place_order(args.coffee, args.size, args.milk, args.location))
+    order = post(args.coffee, args.size, args.milk, args.location)
+
+    print(order)
+
+    print(get(id=order['id']))

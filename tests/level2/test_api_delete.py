@@ -3,34 +3,34 @@ from http import HTTPStatus
 import pytest
 
 
-def test_delete_success(client, onecoffee):
-    url = '/order/delete?id=1'
-    response = client.post(url)
+def test_delete_success(apiclient, onecoffee):
+    url = '/order/1'
+    response = apiclient.delete(url)
 
     assert response.status_code == HTTPStatus.NO_CONTENT
     assert len(onecoffee.orders) == 0
 
 
 @pytest.mark.skip
-def test_delete_badreq(client, onecoffee):
-    url = '/order/delete'
-    response = client.post(url)
-
-    assert response.status_code == HTTPStatus.BAD_REQUEST
-    assert len(onecoffee.orders) == 1
-
-
 def test_delete_not_allowed(client, onecoffee):
-    url = '/order/delete?id=1'
-    response = client.get(url)
+    url = '/order?id=1'
+    response = client.delete(url)
 
     assert response.status_code == HTTPStatus.METHOD_NOT_ALLOWED
     assert len(onecoffee.orders) == 1
 
 
-def test_delete_not_found(client, onecoffee):
-    url = '/order/delete?id=404'
-    response = client.post(url)
+@pytest.mark.skip
+def test_delete_badreq(client, onecoffee):
+    url = '/order'
+    response = client.delete(url)
+
+    assert response.status_code == HTTPStatus.BAD_REQUEST
+    assert len(onecoffee.orders) == 1
+
+
+def test_delete_not_found(apiclient, onecoffee):
+    url = '/order/404'
+    response = apiclient.delete(url)
 
     assert response.status_code == HTTPStatus.NOT_FOUND
-    assert len(onecoffee.orders) == 1
