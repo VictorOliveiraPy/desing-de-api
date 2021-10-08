@@ -17,10 +17,7 @@ def deserialize(s):
 class IMySerializable(metaclass=abc.ABCMeta):
     @classmethod
     def __subclasscheck__(cls, subclass):
-        return (
-                hasattr(subclass, 'vars') and
-                callable(subclass.vars)
-        )
+        return hasattr(subclass, 'vars') and callable(subclass.vars)
 
     @abc.abstractmethod
     def vars(self):
