@@ -8,7 +8,8 @@ def test_delete_success(apiclient, onecoffee):
     response = apiclient.delete(url)
 
     assert response.status_code == HTTPStatus.NO_CONTENT
-    assert len(onecoffee.orders) == 0
+    assert len(onecoffee.orders) == 1
+    assert onecoffee.read(1).is_cancelled()
 
 
 @pytest.mark.skip

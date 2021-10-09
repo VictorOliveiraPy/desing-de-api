@@ -1,6 +1,6 @@
 import httpretty
 
-from client_level0.core import place_order
+from clientes.client_level0.core import place_order
 
 
 @httpretty.activate

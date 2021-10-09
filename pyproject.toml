@@ -12,6 +12,7 @@ requests = "^2.26.0"
 pytest-mock = "^3.6.1"
 pytest-django = "^4.4.0"
 isort = "^5.9.3"
+httpretty = "^1.1.4"
 
 [tool.poetry.dev-dependencies]
 

@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #'apps.core',
     #'apps.level1'
-    'apps.level2'
+    #'apps.level2'
+    'apps.level3',
 
 ]
 
@@ -51,7 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'apps.level2.framework.FrameworkCommonExceptionHandler',
+    'apps.level3.framework.FrameworkCommonExceptionHandler',
 ]
 
 ROOT_URLCONF = 'desingn_api.urls'
