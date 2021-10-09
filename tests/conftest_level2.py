@@ -1,15 +1,15 @@
 import pytest
 from pytest_django.lazy_django import skip_if_no_django
 
-from apps.level3 import domain
-from apps.level3.domain import CoffeeShop, Order, Status
-from apps.level3.framework import APIClient
+from apps.level2 import domain
+from apps.level2.domain import CoffeeShop, Order, Status
+from apps.level2.framework import APIClient
 
 
 @pytest.fixture
 def coffeeshop(mocker):
     cs = CoffeeShop()
-    mocker.patch('apps.level3.api.coffeeshop', cs)
+    mocker.patch('apps.level2.api.coffeeshop', cs)
     return cs
 
 
